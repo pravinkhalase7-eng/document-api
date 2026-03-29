@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: Pravin123
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - docvault-network
+
+  app:
+    build: .
+    container_name: docvault-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      MONGO_URI: mongodb://admin:Pravin%24123@mongodb:27017/docvault?authSource=admin
+    depends_on:
+      - mongodb
+    networks:
+      - docvault-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  docvault-network:
