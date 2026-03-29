@@ -20,7 +20,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      MONGO_URI: mongodb://admin:Pravin%24123@mongodb:27017/docvault?authSource=admin
+      MONGO_URI: mongodb://admin:Pravin123@mongodb:27017/docvault?authSource=admin
     depends_on:
       - mongodb
     networks:
