@@ -15,6 +15,8 @@ pipeline {
             }
         }
 
+        sh 'docker version'
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE .'
