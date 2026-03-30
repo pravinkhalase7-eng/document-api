@@ -17,3 +17,9 @@ export const getUserByIdService = async (id: string) => {
 export const deleteUserService = async (id: string) => {
   return await User.findByIdAndDelete(id);
 };
+
+
+// Get user by ID
+export const getUserById = async (userId: string) => {
+  return await User.findOne({ userId }).lean();
+};

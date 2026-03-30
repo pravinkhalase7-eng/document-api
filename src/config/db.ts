@@ -4,7 +4,7 @@ export const connectDB = async () => {
   try {
     const MONGO_URI =
       process.env.MONGO_URI ||
-      "mongodb://admin:Pravin123@mongodb:27017/docvault?authSource=admin";
+      "mongodb://admin:Pravin123@127.0.0.1:27017/docvault?authSource=admin";
 
     await mongoose.connect(MONGO_URI);
 
