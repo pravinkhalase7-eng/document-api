@@ -6,9 +6,10 @@ import { v4 as uuidv4 } from "uuid";
 
 export const generateUploadUrl = async (
   fileName: string,
-  mimeType: string
+  mimeType: string,
+  userId: string
 ) => {
-  const key = `uploads/${uuidv4()}-${fileName}`;
+  const key = `documents/${userId}/${uuidv4()}-${fileName}`;
 
   const command = new PutObjectCommand({
     Bucket: BUCKET,
