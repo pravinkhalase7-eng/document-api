@@ -49,6 +49,12 @@ export const deleteDocument = async (docId: string) => {
 };
 
 
+// Delete
+export const deleteAllDocument = async () => {
+  return await Document.deleteMany();
+};
+
+
 export const getDocumentsPaginated = async (page: number, limit: number) => {
   const skip = (page - 1) * limit;
 
