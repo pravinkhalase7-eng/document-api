@@ -23,7 +23,7 @@ const documentSchema = new mongoose.Schema(
     },
       thumbnailKey: {
       type: String,
-      required: true,
+      required: false,
     },  
   },
   {
