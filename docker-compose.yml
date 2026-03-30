@@ -14,8 +14,6 @@ services:
       - docvault-network
 
   app:
-    env_file:
-      - .env
     build: .
     container_name: docvault-app
     restart: unless-stopped
