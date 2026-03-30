@@ -61,11 +61,6 @@ export const deleteDoc = async (req: Request, res: Response) => {
 // Delete
 export const deleteAllDoc = async (req: Request, res: Response) => {
   const doc = await deleteAllDocument();
-
-  if (!doc) {
-    return res.status(404).json({ message: "Not found" });
-  }
-
   res.json({ message: "Deleted successfully" });
 };
 

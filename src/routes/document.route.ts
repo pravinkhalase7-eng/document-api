@@ -13,11 +13,11 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 const router = express.Router();
 
 router.get("/list", authMiddleware, getDocumentsWithUrl);
+router.delete("/all", authMiddleware, deleteAllDoc);
 router.post("/", authMiddleware, createDoc);
 router.get("/", authMiddleware,  getDocs);
 router.get("/:docId", authMiddleware, getDoc);
 router.put("/:docId", authMiddleware, updateDoc);
 router.delete("/:docId", authMiddleware, deleteDoc);
-router.delete("/all", authMiddleware, deleteAllDoc);
 
 export default router;
