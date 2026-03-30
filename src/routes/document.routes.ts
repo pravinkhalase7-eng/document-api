@@ -6,13 +6,14 @@ import {
   updateDoc,
   deleteDoc,
 } from "../controllers/document.controller";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.post("/", createDoc);
-router.get("/", getDocs);
-router.get("/:docId", getDoc);
-router.put("/:docId", updateDoc);
-router.delete("/:docId", deleteDoc);
+router.post("/", authMiddleware, createDoc);
+router.get("/", authMiddleware,  getDocs);
+router.get("/:docId", authMiddleware, getDoc);
+router.put("/:docId", authMiddleware, updateDoc);
+router.delete("/:docId", authMiddleware, deleteDoc);
 
 export default router;
