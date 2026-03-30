@@ -23,6 +23,8 @@ services:
         - docvault-network
 
   worker:
+    env_file:
+      - .env
     build: .
     container_name: docvault-worker
     command: node dist/workers/thumbnail.worker.js
