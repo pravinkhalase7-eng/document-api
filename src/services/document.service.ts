@@ -12,11 +12,14 @@ export const createDocument = async (data: any) => {
     docId: uuidv4(),
     ...data,
   });
+  
     // 2️⃣ 🔥 Trigger queue (ADD JOB)
   await thumbnailQueue.add("generate-thumbnail", {
     docId: doc.docId,
     s3Key: doc.s3Key,
   });
+
+  console.log('queue strted....')
   
   return doc;
 };

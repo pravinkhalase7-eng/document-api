@@ -1,10 +1,14 @@
 import { Worker } from "bullmq";
+import { generateThumbnail } from "../services/thumbnail.service";
 
 new Worker(
   "thumbnail-queue",
   async (job) => {
-    console.log("Processing job:", job.id);
-    // your logic
+    const { docId, s3Key } = job.data;
+
+    console.log("🔥 Processing job:", job.id);
+
+    await generateThumbnail(docId, s3Key);
   },
   {
     connection: {
