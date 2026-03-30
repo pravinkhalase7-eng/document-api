@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helloRoutes from "./routes/hello.route";
 import userRoutes from "./routes/user.route";
+import authRoutes from "./routes/auth.routes";
 import { connectDB } from "./config/db";
 
 const app = express();
@@ -15,6 +16,7 @@ connectDB();
 // Routes
 app.use("/api", helloRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 // Health check
 app.get("/", (req, res) => {
