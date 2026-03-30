@@ -2,11 +2,8 @@ import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { Document } from "../models/document.model";
 import { v4 as uuidv4 } from "uuid";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { Worker } from "bullmq";
-
 import { BUCKET, s3 } from "../utils/s3";
-
-import { generateBucketName } from "../utils/bucketUtils";
+import { thumbnailQueue } from "../queues/thumbnail.queue";
 
 // Create
 export const createDocument = async (data: any) => {
@@ -15,22 +12,12 @@ export const createDocument = async (data: any) => {
     docId: uuidv4(),
     ...data,
   });
-
-
-new Worker(
-  "thumbnail-queue",
-  async (job) => {
-    console.log("Processing job:", job.id);
-    // your logic
-  },
-  {
-    connection: {
-      host: process.env.REDIS_HOST || "127.0.0.1",
-      port: Number(process.env.REDIS_PORT) || 6379,
-    },
-  }
-);
-
+    // 2️⃣ 🔥 Trigger queue (ADD JOB)
+  await thumbnailQueue.add("generate-thumbnail", {
+    docId: doc.docId,
+    s3Key: doc.s3Key,
+  });
+  
   return doc;
 };
 
