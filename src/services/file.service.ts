@@ -1,7 +1,10 @@
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { v4 as uuidv4 } from "uuid";
+
 import { BUCKET, s3 } from "../utils/s3";
 import { getUserById } from "./user.service";
+
 
 
 export const generateUploadUrl = async (
@@ -12,7 +15,7 @@ export const generateUploadUrl = async (
 
    const userInfo = await getUserById(userId);
    console.log('bucket', userInfo?.folderName)
-  const key = `documents/${userInfo?.folderName}/${fileName}`;
+  const key = `documents/${userInfo?.folderName}/${uuidv4()} - ${fileName}`;
 
   const command = new PutObjectCommand({
     Bucket: BUCKET,
