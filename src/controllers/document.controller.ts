@@ -5,6 +5,7 @@ import {
   getDocumentById,
   updateDocument,
   deleteDocument,
+  getDocumentsPaginated,
 } from "../services/document.service";
 
 // Create
@@ -54,4 +55,18 @@ export const deleteDoc = async (req: Request, res: Response) => {
   }
 
   res.json({ message: "Deleted successfully" });
+};
+
+export const getDocumentsWithUrl = async (_req: Request, res: Response) => {
+  try {
+    const page = parseInt(_req.query.page as string) || 1;
+    const limit = parseInt(_req.query.limit as string) || 20;
+
+    const result = await getDocumentsPaginated(page, limit);
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch documents" });
+  }
 };

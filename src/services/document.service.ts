@@ -1,5 +1,8 @@
+import { GetObjectCommand } from "@aws-sdk/client-s3";
 import { Document } from "../models/document.model";
 import { v4 as uuidv4 } from "uuid";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { BUCKET, s3 } from "../utils/s3";
 
 // Create
 export const createDocument = async (data: any) => {
@@ -32,4 +35,48 @@ export const updateDocument = async (docId: string, data: any) => {
 // Delete
 export const deleteDocument = async (docId: string) => {
   return await Document.findOneAndDelete({ docId });
+};
+
+
+export const getDocumentsPaginated = async (page: number, limit: number) => {
+  const skip = (page - 1) * limit;
+
+  const [docs, total] = await Promise.all([
+    Document.find()
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdDate: -1 })
+      .lean(),
+    Document.countDocuments(),
+  ]);
+
+  const data = await Promise.all(
+    docs.map(async (doc) => {
+      const command = new GetObjectCommand({
+        Bucket: BUCKET,
+        Key: doc.s3Key,
+      });
+
+      const url = await getSignedUrl(s3, command, {
+        expiresIn: 3600,
+      });
+
+      return {
+        docId: doc.docId,
+        name: doc.name,
+        category: doc.category,
+        imageUrl: url,
+      };
+    })
+  );
+
+  return {
+    data,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
 };
