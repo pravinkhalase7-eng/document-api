@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { generateUploadUrl } from "../services/file.service";
+import { generateDownloadUrl, generateUploadUrl } from "../services/file.service";
+import { GetObjectCommand } from "@aws-sdk/client-s3";
 
 export const getUploadUrl = async (req: Request, res: Response) => {
   try {
@@ -21,4 +22,12 @@ export const getUploadUrl = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ message: "Failed to generate URL", error });
   }
+  
+};
+
+
+// Get one
+export const getDownloadUrl = async (req: Request, res: Response) => {
+  const doc = await generateDownloadUrl(req.params.s3Key);
+  res.json(doc);
 };
