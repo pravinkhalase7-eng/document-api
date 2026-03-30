@@ -12,7 +12,7 @@ export const getUploadUrl = async (req: Request, res: Response) => {
       });
     }
 
-    const result = await generateUploadUrl(fileName, mimeType, req.user?.userId);
+    const result = await generateUploadUrl(fileName, mimeType, (req as any).user?.userId);
 
     res.json({
       message: "Upload URL generated",
