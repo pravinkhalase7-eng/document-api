@@ -3,9 +3,11 @@ import { Document } from "../models/document.model";
 import { v4 as uuidv4 } from "uuid";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { BUCKET, s3 } from "../utils/s3";
+import { generateBucketName } from "../utils/bucketUtils";
 
 // Create
 export const createDocument = async (data: any) => {
+
   const doc = await Document.create({
     docId: uuidv4(),
     ...data,
