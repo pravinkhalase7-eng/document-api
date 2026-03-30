@@ -5,6 +5,7 @@ import userRoutes from "./routes/user.route";
 import authRoutes from "./routes/auth.routes";
 import fileRoutes from "./routes/file.route";
 import documentRoutes from "./routes/document.route";
+import { serverAdapter } from "./utils/bullBoard";
 
 
 import dotenv from "dotenv";
@@ -27,7 +28,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/documents", documentRoutes);
-
+app.use("/admin/queues", serverAdapter.getRouter());
 // Health check
 app.get("/", (req, res) => {
   res.send("Server is running 🚀");
