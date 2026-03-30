@@ -5,6 +5,6 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 const router = express.Router();
 
 router.post("/presigned-url",authMiddleware, getUploadUrl);
-router.post("/download/:s3Key",authMiddleware, getDownloadUrl);
+router.get("/download/:s3Key",authMiddleware, getDownloadUrl);
 
 export default router;
