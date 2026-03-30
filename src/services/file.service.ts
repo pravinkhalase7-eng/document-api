@@ -29,7 +29,7 @@ export const generateUploadUrl = async (
   };
 };
 
-export const generateDownloadUrl = async (key: string) => {
+export const generateDownloadUrl = async (key: any) => {
   const command = new GetObjectCommand({
     Bucket: BUCKET,
     Key: key,

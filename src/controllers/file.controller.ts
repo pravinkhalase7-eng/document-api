@@ -28,6 +28,7 @@ export const getUploadUrl = async (req: Request, res: Response) => {
 
 // Get one
 export const getDownloadUrl = async (req: Request, res: Response) => {
-  const doc = await generateDownloadUrl(req.params.s3Key);
+ const {s3Key = "" } = req.query;
+  const doc = await generateDownloadUrl(s3Key);
   res.json(doc);
 };
