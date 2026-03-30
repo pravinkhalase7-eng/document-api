@@ -9,7 +9,7 @@ export const generateUploadUrl = async (
   mimeType: string,
   userId: string
 ) => {
-  const key = `documents/${userId}/${uuidv4()}-${fileName}`;
+  const key = `documents/${userId}/${fileName}`;
 
   const command = new PutObjectCommand({
     Bucket: BUCKET,
