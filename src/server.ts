@@ -4,6 +4,9 @@ import helloRoutes from "./routes/hello.route";
 import userRoutes from "./routes/user.route";
 import authRoutes from "./routes/auth.routes";
 import fileRoutes from "./routes/file.route";
+import documentRoutes from "./routes/document.route";
+
+
 import dotenv from "dotenv";
 
 import { connectDB } from "./config/db";
@@ -23,6 +26,7 @@ app.use("/api", helloRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/files", fileRoutes);
+app.use("/api/documents", documentRoutes);
 
 // Health check
 app.get("/", (req, res) => {
