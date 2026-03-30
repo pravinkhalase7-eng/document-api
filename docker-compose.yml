@@ -13,6 +13,30 @@ services:
     networks:
       - docvault-network
 
+  redis:
+      image: redis:7
+      container_name: redis
+      restart: unless-stopped
+      ports:
+        - "6379:6379"
+      networks:
+        - docvault-network
+
+  worker:
+    build: .
+    container_name: docvault-worker
+    command: node dist/workers/thumbnail.worker.js
+    restart: unless-stopped
+    environment:
+      MONGO_URI: mongodb://admin:Pravin%24123@mongodb:27017/docvault?authSource=admin
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+      - mongodb
+    networks:
+      - docvault-network
+
   app:
     env_file:
       - .env
@@ -22,9 +46,12 @@ services:
     ports:
       - "3000:3000"
     environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
       MONGO_URI: mongodb://admin:Pravin123@mongodb:27017/docvault?authSource=admin
     depends_on:
       - mongodb
+      - redis
     networks:
       - docvault-network
 
