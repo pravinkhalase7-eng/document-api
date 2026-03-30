@@ -11,11 +11,11 @@ import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
+router.get("/list", authMiddleware, getDocumentsWithUrl);
 router.post("/", authMiddleware, createDoc);
 router.get("/", authMiddleware,  getDocs);
 router.get("/:docId", authMiddleware, getDoc);
 router.put("/:docId", authMiddleware, updateDoc);
 router.delete("/:docId", authMiddleware, deleteDoc);
-router.get("/list", authMiddleware, getDocumentsWithUrl);
 
 export default router;
