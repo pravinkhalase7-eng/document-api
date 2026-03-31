@@ -36,9 +36,8 @@ export const startMultiPartUpload = async (req: Request, res: Response) => {
       });
     }
 
-   const result = await startMultiPart(fileName,mimeType, (req as any).user?.userId)
-
-   return result;
+   const result = await startMultiPart(fileName,mimeType, (req as any).user?.userId);
+    res.json(result);
 
   } catch (error) {
     console.error(error);
