@@ -39,9 +39,10 @@ export const generateThumbnail = async (docId: string, s3Key: string, fileName: 
       .toBuffer();
 
     const s3BaseUrl = path.dirname(s3Key);
+    const fileName = path.basename(s3Key);
 
     // 3️⃣ Create thumbnail key
-    const thumbKey = `${s3BaseUrl}/thumbnails/${fileName}`
+    const thumbKey = `${s3BaseUrl}/thumbnail_${fileName}`
 
     console.log("📤 Uploading thumbnail:", thumbKey);
 
