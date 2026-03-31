@@ -50,7 +50,7 @@ export const generateThumbnail = async (docId: string, s3Key: string, fileName: 
     // 2️⃣ Generate thumbnail using sharp
     const thumbnailBuffer = await sharp(buffer)
       .resize(300) // width = 300px
-      .jpeg({ quality: 60 })
+      .webp({ quality: 60 })
       .toBuffer();
 
 
