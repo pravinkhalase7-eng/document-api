@@ -5,11 +5,12 @@ import {
   PutObjectCommand,
 } from "@aws-sdk/client-s3";
 import { Document } from "../models/document.model";
+import path from "path";
 
 const BUCKET = process.env.AWS_BUCKET_NAME!;
 
 // 🔥 MAIN SERVICE
-export const generateThumbnail = async (docId: string, s3Key: string) => {
+export const generateThumbnail = async (docId: string, s3Key: string, fileName:  string) => {
   try {
     console.log("📥 Downloading original:", s3Key);
 
@@ -37,8 +38,10 @@ export const generateThumbnail = async (docId: string, s3Key: string) => {
       .jpeg({ quality: 60 })
       .toBuffer();
 
+    const s3BaseUrl = path.dirname(s3Key);
+
     // 3️⃣ Create thumbnail key
-    const thumbKey = s3Key.replace("originals", "thumbnails");
+    const thumbKey = `${s3BaseUrl}/thumbnails/${fileName}`
 
     console.log("📤 Uploading thumbnail:", thumbKey);
 

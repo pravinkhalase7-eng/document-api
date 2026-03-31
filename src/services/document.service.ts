@@ -17,6 +17,7 @@ export const createDocument = async (data: any) => {
   await thumbnailQueue.add("generate-thumbnail", {
     docId: doc.docId,
     s3Key: doc.s3Key,
+    fileName: doc.fileName
   });
 
   console.log('queue strted....')

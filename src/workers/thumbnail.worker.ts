@@ -9,8 +9,8 @@ import { generateThumbnail } from "../services/thumbnail.service";
     async (job) => {
       console.log("Processing job:", job.id);
       // your logic
-      const { docId, s3Key } = job?.data;
-     await generateThumbnail(docId,s3Key);
+      const { docId, s3Key, fileName } = job?.data;
+     await generateThumbnail(docId,s3Key, fileName);
     },
     {
       connection: {
