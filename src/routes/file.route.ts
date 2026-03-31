@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/presigned-url",authMiddleware, getUploadUrl);
 router.get("/download",authMiddleware, getDownloadUrl);
-router.get("/start-multi-part",authMiddleware, startMultiPartUpload);
+router.post("/start-multi-part",authMiddleware, startMultiPartUpload);
 
 export default router;
