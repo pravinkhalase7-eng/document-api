@@ -4,7 +4,7 @@ import { GetObjectCommand } from "@aws-sdk/client-s3";
 
 export const getUploadUrl = async (req: Request, res: Response) => {
   try {
-    const { fileName, mimeType } = req.body;
+    const { fileName, mimeType, uploadId, isLargeFile, partNumber } = req.body;
 
     if (!fileName || !mimeType) {
       return res.status(400).json({
@@ -12,7 +12,7 @@ export const getUploadUrl = async (req: Request, res: Response) => {
       });
     }
 
-    const result = await generateUploadUrl(fileName, mimeType, (req as any).user?.userId);
+    const result = await generateUploadUrl(fileName, mimeType, (req as any).user?.userId, uploadId , isLargeFile , partNumber);
 
     res.json({
       message: "Upload URL generated",

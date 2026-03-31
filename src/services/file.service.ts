@@ -13,7 +13,7 @@ export const generateUploadUrl = async (
   fileName: string,
   mimeType: string,
   userId: string,
-  isLargeFile: string,
+  isLargeFile: boolean,
   uploadId: string,
   partNumber: any,
 ) => {
