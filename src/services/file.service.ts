@@ -71,7 +71,7 @@ export const startMultiPart = async (
   });
   const response = await s3.send(command);
   console.log("response", response?.UploadId);
-  return { key, UploadId: response?.UploadId };
+  return { key, uploadId: response?.UploadId };
 };
 
 export const generateDownloadUrl = async (key: any) => {
