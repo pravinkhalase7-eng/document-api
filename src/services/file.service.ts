@@ -60,14 +60,10 @@ export const generateUploadUrl = async (
 };
 
 export const startMultiPart = async (
-  fileName: string,
+  key: string,
   mimeType: string,
-  userId: string,
 ) => {
-  const userInfo = await getUserById(userId);
-  const key = `documents/${userInfo?.folderName}/${uuidv4()} - ${fileName}`;
 
-  console.log("my key is....", key);
   const command = new CreateMultipartUploadCommand({
     Bucket: BUCKET,
     Key: key,

@@ -43,15 +43,9 @@ export const getLargeUrl = async (req: Request, res: Response) => {
 
 export const startMultiPartUpload = async (req: Request, res: Response) => {
   try {
-    const { fileName, mimeType } = req.body;
-
-    if (!fileName || !mimeType) {
-      return res.status(400).json({
-        message: "fileName and mimeType are required",
-      });
-    }
-
-   const result = await startMultiPart(fileName,mimeType, (req as any).user?.userId);
+    const { mimeType, key } = req.body;
+    
+   const result = await startMultiPart(key,mimeType);
     res.json(result);
 
   } catch (error) {
