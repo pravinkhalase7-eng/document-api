@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { generateDownloadUrl, generateUploadUrl } from "../services/file.service";
-import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { generateDownloadUrl, generateUploadUrl, startMultiPart } from "../services/file.service";
+import { CreateMultipartUploadCommand, GetObjectCommand } from "@aws-sdk/client-s3";
+import { BUCKET } from "../utils/s3";
 
 export const getUploadUrl = async (req: Request, res: Response) => {
   try {
@@ -21,6 +22,33 @@ export const getUploadUrl = async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to generate URL", error });
+  }
+  
+};
+
+export const startMultiPartUpload = async (req: Request, res: Response) => {
+  try {
+    const { fileName, mimeType, key, fileType } = req.body;
+
+    if (!fileName || !mimeType) {
+      return res.status(400).json({
+        message: "fileName and mimeType are required",
+      });
+    }
+
+   const result = await startMultiPart(fileName,mimeType, (req as any).user?.userId)
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        uploadId: result.UploadId,
+        key: result.UploadId,
+      }),
+    };
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to startMultiPartUpload URL", error });
   }
   
 };
