@@ -16,7 +16,8 @@ const BUCKET = process.env.AWS_BUCKET_NAME!;
 
 export const generateThumbnail = async (docId: string, s3Key: string) => {
   try {
-    const fileName = path.basename(s3Key);
+    let fileName = path.basename(s3Key);
+    fileName = fileName.replace(/\s+/g, "_");
     const ext = path.extname(fileName).toLowerCase();
     const basePath = path.dirname(s3Key);
 
