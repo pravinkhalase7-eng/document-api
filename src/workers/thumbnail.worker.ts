@@ -1,22 +1,24 @@
 import { Worker } from "bullmq";
-import { connectDB } from "../config/db";
 import { generateThumbnail } from "../services/thumbnail.service";
+import { connectDB } from "../config/db";
 
-(() => {
-  connectDB();
+(async () => {
+  await connectDB();
+
   new Worker(
     "thumbnail-queue",
     async (job) => {
-      console.log("Processing job:", job.id);
-      // your logic
-      const { docId, s3Key, fileName } = job?.data;
-     await generateThumbnail(docId,s3Key, fileName);
+      const { docId, s3Key } = job.data;
+
+      console.log("🔥 Processing:", docId);
+
+      await generateThumbnail(docId, s3Key);
     },
     {
       connection: {
-        host: process.env.REDIS_HOST || "127.0.0.1",
+        host: process.env.REDIS_HOST || "redis",
         port: Number(process.env.REDIS_PORT) || 6379,
       },
-    },
+    }
   );
 })();
