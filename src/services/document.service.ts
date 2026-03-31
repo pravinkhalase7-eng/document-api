@@ -72,7 +72,7 @@ export const getDocumentsPaginated = async (page: number, limit: number) => {
     docs.map(async (doc) => {
       const command = new GetObjectCommand({
         Bucket: BUCKET,
-        Key: doc.s3Key,
+        Key: doc?.thumbnailKey ||  doc.s3Key,
       });
 
       const url = await getSignedUrl(s3, command, {
