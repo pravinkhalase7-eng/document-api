@@ -1,5 +1,6 @@
 import {
-    CreateMultipartUploadCommand,
+  CompleteMultipartUploadCommand,
+  CreateMultipartUploadCommand,
   GetObjectCommand,
   PutObjectCommand,
   UploadPartCommand,
@@ -61,13 +62,13 @@ export const startMultiPart = async (
   const userInfo = await getUserById(userId);
   const key = `documents/${userInfo?.folderName}/${uuidv4()} - ${fileName}`;
 
-   const command = new CreateMultipartUploadCommand({
-      Bucket: BUCKET,
-      Key: key,
-      ContentType: mimeType,
-    });
-    const response = await s3.send(command);
-  return { key,  response};
+  const command = new CreateMultipartUploadCommand({
+    Bucket: BUCKET,
+    Key: key,
+    ContentType: mimeType,
+  });
+  const response = await s3.send(command);
+  return { key, response };
 };
 
 export const generateDownloadUrl = async (key: any) => {
@@ -80,4 +81,23 @@ export const generateDownloadUrl = async (key: any) => {
     expiresIn: 60 * 5, // 5 min
   });
   return { s3Url };
+};
+
+export const completeUpload = async (
+  key: string,
+  uploadId: string,
+  parts: any,
+) => {
+  const command = new CompleteMultipartUploadCommand({
+    Bucket: BUCKET,
+    Key: key,
+    UploadId: uploadId,
+    MultipartUpload: {
+      Parts: parts, // [{ ETag, PartNumber }]
+    },
+  });
+
+  const response = await s3.send(command);
+
+  return { key, response };
 };
