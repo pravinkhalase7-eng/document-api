@@ -80,6 +80,7 @@ export const getDocumentsPaginated = async (page: number, limit: number) => {
       });
 
       return {
+        ...doc,
         docId: doc.docId,
         name: doc.name,
         category: doc.category,
