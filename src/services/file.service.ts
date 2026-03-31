@@ -67,8 +67,8 @@ export const startMultiPart = async (
       Key: key,
       ContentType: mimeType,
     });
-    console.log('command', command);
     const response = await s3.send(command);
+    console.log('response we got', response)
   return { key,  response};
 };
 
