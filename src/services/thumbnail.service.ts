@@ -6,6 +6,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { Document } from "../models/document.model";
 import path from "path";
+import heicConvert from "heic-convert";
 
 const BUCKET = process.env.AWS_BUCKET_NAME!;
 
@@ -30,6 +31,20 @@ export const generateThumbnail = async (docId: string, s3Key: string, fileName: 
     }
     const buffer = Buffer.concat(chunks);
 
+
+    const s3BaseUrl = path.dirname(s3Key);
+    const fileName = path.basename(s3Key);
+    
+    let inputBuffer = buffer;
+    if (fileName.toLowerCase().endsWith(".heic")) {
+    console.log("🔄 Converting HEIC → JPEG");
+
+    inputBuffer = await heicConvert({
+        buffer,
+        format: "JPEG",
+        quality: 0.8,
+    });
+    }
     console.log("🖼 Generating thumbnail...");
 
     // 2️⃣ Generate thumbnail using sharp
@@ -38,8 +53,6 @@ export const generateThumbnail = async (docId: string, s3Key: string, fileName: 
       .jpeg({ quality: 60 })
       .toBuffer();
 
-    const s3BaseUrl = path.dirname(s3Key);
-    const fileName = path.basename(s3Key);
 
     // 3️⃣ Create thumbnail key
     const thumbKey = `${s3BaseUrl}/thumbnail_${fileName}`
