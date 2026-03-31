@@ -29,6 +29,14 @@ const documentSchema = new mongoose.Schema(
       type: String,
       required: false,
     },  
+     fileSize: {
+      type: String,
+      required: false,
+    },  
+     contentType: {
+      type: String,
+      required: false,
+    },  
   },
   {
     timestamps: {
