@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { completeUpload, generateDownloadUrl, generateUploadUrl, startMultiPart } from "../services/file.service";
+import { completeUpload, generateDownloadUrl, generateLargeUploadUrl, generateUploadUrl, startMultiPart } from "../services/file.service";
 import { CreateMultipartUploadCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { BUCKET } from "../utils/s3";
 
@@ -25,6 +25,21 @@ export const getUploadUrl = async (req: Request, res: Response) => {
   }
   
 };
+
+export const getLargeUrl = async (req: Request, res: Response) => {
+  try {
+    const { key, uploadId, partNumber } = req.body;
+
+    const result = await generateLargeUploadUrl(key, uploadId, partNumber);
+    res.json(result);
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to generate URL", error });
+  }
+  
+};
+
 
 export const startMultiPartUpload = async (req: Request, res: Response) => {
   try {
