@@ -28,7 +28,7 @@ export const getUploadUrl = async (req: Request, res: Response) => {
 
 export const startMultiPartUpload = async (req: Request, res: Response) => {
   try {
-    const { fileName, mimeType, key, fileType } = req.body;
+    const { fileName, mimeType } = req.body;
 
     if (!fileName || !mimeType) {
       return res.status(400).json({
@@ -38,13 +38,7 @@ export const startMultiPartUpload = async (req: Request, res: Response) => {
 
    const result = await startMultiPart(fileName,mimeType, (req as any).user?.userId)
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        uploadId: result.UploadId,
-        key: result.UploadId,
-      }),
-    };
+   return result;
 
   } catch (error) {
     console.error(error);

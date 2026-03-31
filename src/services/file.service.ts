@@ -66,7 +66,7 @@ export const startMultiPart = async (
       ContentType: mimeType,
     });
     const response = await s3.send(command);
-  return response;
+  return { key,  response};
 };
 
 export const generateDownloadUrl = async (key: any) => {
