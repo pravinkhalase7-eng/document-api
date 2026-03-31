@@ -62,12 +62,14 @@ export const startMultiPart = async (
   const userInfo = await getUserById(userId);
   const key = `documents/${userInfo?.folderName}/${uuidv4()} - ${fileName}`;
 
+  console.log('my key is....', key)
   const command = new CreateMultipartUploadCommand({
     Bucket: BUCKET,
     Key: key,
     ContentType: mimeType,
   });
   const response = await s3.send(command);
+  console.log('response',response);
   return { key, response };
 };
 
