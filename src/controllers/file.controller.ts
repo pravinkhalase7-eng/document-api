@@ -13,7 +13,7 @@ export const getUploadUrl = async (req: Request, res: Response) => {
       });
     }
 
-    const result = await generateUploadUrl(fileName, mimeType, (req as any).user?.userId, uploadId , isLargeFile , partNumber);
+    const result = await generateUploadUrl(fileName, mimeType, (req as any).user?.userId);
 
     res.json({
       message: "Upload URL generated",
@@ -32,7 +32,7 @@ export const getLargeUrl = async (req: Request, res: Response) => {
 
     const result = await generateLargeUploadUrl(key, uploadId, partNumber);
     res.json(result);
-    
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to generate URL", error });
