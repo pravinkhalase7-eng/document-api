@@ -36,6 +36,11 @@ const documentSchema = new mongoose.Schema(
      contentType: {
       type: String,
       required: false,
+    },
+    folderId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Folder",
+      default: null,
     },  
   },
   {

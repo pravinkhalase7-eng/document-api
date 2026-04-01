@@ -1,29 +1,29 @@
 import { Request, Response } from "express";
 import {
-  createDocument,
-  getAllDocuments,
   getDocumentById,
   updateDocument,
-  deleteDocument,
   getDocumentsPaginated,
   deleteAllDocument,
+  deleteDocumentsById,
+  createDocument,
+  getDocuments,
 } from "../services/document.service";
 
 // Create
-export const createDoc = async (req: Request, res: Response) => {
-  try {
-    const doc = await createDocument(req.body);
-    res.json(doc);
-  } catch (err) {
-    res.status(500).json({ message: "Create failed", err });
-  }
-};
+// export const createDoc = async (req: Request, res: Response) => {
+//   try {
+//     const doc = await createDocument(req.body);
+//     res.json(doc);
+//   } catch (err) {
+//     res.status(500).json({ message: "Create failed", err });
+//   }
+// };
 
 // Get all
-export const getDocs = async (_req: Request, res: Response) => {
-  const docs = await getAllDocuments();
-  res.json(docs);
-};
+// export const getDocs = async (_req: Request, res: Response) => {
+//   const docs = await getAllDocuments();
+//   res.json(docs);
+// };
 
 // Get one
 export const getDoc = async (req: Request, res: Response) => {
@@ -48,15 +48,15 @@ export const updateDoc = async (req: Request, res: Response) => {
 };
 
 // Delete
-export const deleteDoc = async (req: Request, res: Response) => {
-  const doc = await deleteDocument(req.params.docId);
+// export const deleteDoc = async (req: Request, res: Response) => {
+//   const doc = await deleteDocument(req.params.docId);
 
-  if (!doc) {
-    return res.status(404).json({ message: "Not found" });
-  }
+//   if (!doc) {
+//     return res.status(404).json({ message: "Not found" });
+//   }
 
-  res.json({ message: "Deleted successfully" });
-};
+//   res.json({ message: "Deleted successfully" });
+// };
 
 // Delete
 export const deleteAllDoc = async (req: Request, res: Response) => {
@@ -77,4 +77,29 @@ export const getDocumentsWithUrl = async (_req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({ message: "Failed to fetch documents" });
   }
+};
+
+// controllers/document.controller.ts
+
+export const creageDoc = async (req: any, res: any) => {
+  const doc = await createDocument({
+    ...req.body,
+    userId: req.user.id,
+  });
+
+  res.json(doc);
+};
+
+export const getDocs = async (req: any, res: any) => {
+  const docs = await getDocuments(
+    req.user.id,
+    req.query.folderId || null
+  );
+
+  res.json(docs);
+};
+
+export const deleteDoc = async (req: any, res: any) => {
+  await deleteDocumentsById(req.params.id);
+  res.json({ message: "Deleted" });
 };

@@ -80,7 +80,6 @@ export const getDocumentsPaginated = async (page: number, limit: number) => {
       });
 
       return {
-        ...doc,
         docId: doc.docId,
         name: doc.name,
         category: doc.category,
@@ -98,4 +97,12 @@ export const getDocumentsPaginated = async (page: number, limit: number) => {
       totalPages: Math.ceil(total / limit),
     },
   };
+};
+
+export const getDocuments = async (userId: string, folderId: string | null) => {
+  return await Document.find({ userId, folderId });
+};
+
+export const deleteDocumentsById = async (id: string) => {
+  return await Document.findByIdAndDelete(id);
 };
