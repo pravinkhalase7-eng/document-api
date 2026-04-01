@@ -5,6 +5,7 @@ import userRoutes from "./routes/user.route";
 import authRoutes from "./routes/auth.routes";
 import fileRoutes from "./routes/file.route";
 import documentRoutes from "./routes/document.route";
+import folderRoutes from "./routes/folder.route";
 import { serverAdapter } from "./utils/bullBoard";
 
 
@@ -29,7 +30,9 @@ app.use("/api", helloRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/files", fileRoutes);
+app.use("/api/files", fileRoutes);
 app.use("/api/documents", documentRoutes);
+app.use("/api/folders", folderRoutes);
 app.use("/admin/queues", serverAdapter.getRouter());
 // Health check
 app.get("/", (req, res) => {
