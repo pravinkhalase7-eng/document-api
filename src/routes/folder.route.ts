@@ -1,12 +1,17 @@
-// routes/folder.routes.ts
 import express from "express";
-import * as folderController from "../controllers/folder.controller";
+import {
+createFolder,
+deleteFolder,
+getFolders,
+updateFolder
+} from "../controllers/folder.controller";
+import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.post("/", folderController.createFolder);
-router.get("/", folderController.getFolders);
-router.put("/:id", folderController.updateFolder);
-router.delete("/:id", folderController.deleteFolder);
+router.post("/", authMiddleware, createFolder);
+router.get("/", authMiddleware,  getFolders);
+router.put("/:docId", authMiddleware, updateFolder);
+router.delete("/:docId", authMiddleware, deleteFolder);
 
 export default router;
