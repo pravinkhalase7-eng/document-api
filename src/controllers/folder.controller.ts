@@ -5,7 +5,7 @@ export const createFolder = async (req: any, res: any) => {
   try {
     const folder = await folderService.createFolder({
       name: req.body.name,
-      userId: req.user.id,
+      userId: req.user.userId,
       parentId: req.body.parentId || null,
     });
 
@@ -17,7 +17,7 @@ export const createFolder = async (req: any, res: any) => {
 
 export const getFolders = async (req: any, res: any) => {
   const folders = await folderService.getFolders(
-    req.user.id,
+    req.user.userId,
     req.query.parentId || null
   );
   res.json(folders);

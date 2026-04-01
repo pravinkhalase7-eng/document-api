@@ -84,7 +84,7 @@ export const getDocumentsWithUrl = async (_req: Request, res: Response) => {
 export const creageDoc = async (req: any, res: any) => {
   const doc = await createDocument({
     ...req.body,
-    userId: req.user.id,
+    userId: req.user.userId,
   });
 
   res.json(doc);
@@ -92,7 +92,7 @@ export const creageDoc = async (req: any, res: any) => {
 
 export const getDocs = async (req: any, res: any) => {
   const docs = await getDocuments(
-    req.user.id,
+    req.user.userId,
     req.query.folderId || null
   );
 
