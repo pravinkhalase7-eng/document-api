@@ -4,10 +4,9 @@ import { getUserByIdService } from "../services/user.service";
 
 export const createFolder = async (req: any, res: any) => {
   try {
-    const userInfo = getUserByIdService(req.user.userId)
     const folder = await folderService.createFolder({
       name: req.body.name,
-      userId: userInfo?._id ,
+      userId: req.user.userId ,
       parentId: req.body.parentId || null,
     });
 
