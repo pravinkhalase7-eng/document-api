@@ -1,11 +1,13 @@
 // controllers/folder.controller.ts
 import * as folderService from "../services/folder.service";
+import { getUserByIdService } from "../services/user.service";
 
 export const createFolder = async (req: any, res: any) => {
   try {
+    const userInfo = getUserByIdService(req.user.userId)
     const folder = await folderService.createFolder({
       name: req.body.name,
-      userId: req.user.userId,
+      userId: userInfo?._id ,
       parentId: req.body.parentId || null,
     });
 
