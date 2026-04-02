@@ -102,18 +102,24 @@ export const getDocumentsPaginated = async (page: number, limit: number) => {
 
 export const getDocuments = async (userId: string, folderId: string | null) => {
   console.log(userId, folderId);
-  return await Document.find({ userId });
+  if(folderId){
+    return await Document.find({ userId, folderId });  
+  }else{
+    return await Document.find({ userId });
+  }
 };
 
 export const deleteDocumentsById = async (id: string) => {
   return await Document.findByIdAndDelete(id);
 };
 
-export const getDocumentsPaginatedByFolderId = async (page: number, limit: number, folderId: string) => {
+export const getDocumentsPaginatedByFolderId = async (page: number, limit: number, folderId: string, userId : any) => {
   const skip = (page - 1) * limit;
 
+  const docsList = folderId ? Document.find({ userId, folderId }): Document.find({ userId });
+
   const [docs, total] = await Promise.all([
-    Document.find()
+    docsList
       .skip(skip)
       .limit(limit)
       .sort({ createdDate: -1 })

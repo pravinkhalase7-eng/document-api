@@ -7,6 +7,7 @@ import {
   deleteDocumentsById,
   createDocument,
   getDocuments,
+  getDocumentsPaginatedByFolderId,
 } from "../services/document.service";
 
 // Create
@@ -92,12 +93,17 @@ export const creageDoc = async (req: any, res: any) => {
 
 export const getDocs = async (req: any, res: any) => {
   console.log('calling getdocs');
-  const docs = await getDocuments(
-    req.user.userId,
-    req.query.folderId || null
-  );
+   const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 20;
+    const folderId = req.query.folderId ;
 
-  res.json(docs);
+    console.log(page, limit, folderId);
+
+    const result = await getDocumentsPaginatedByFolderId(page, limit, folderId, req.user.userId);
+
+    console.log('result',result);
+    
+  res.json(result);
 };
 
 export const deleteDoc = async (req: any, res: any) => {
