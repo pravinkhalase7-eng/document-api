@@ -7,6 +7,11 @@ const documentSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+     userId: {
+      type: String,
+      ref: "User",
+      required: true,
+    },
     name: {
       type: String,
       required: true,
