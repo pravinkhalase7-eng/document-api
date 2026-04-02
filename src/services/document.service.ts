@@ -107,3 +107,47 @@ export const getDocuments = async (userId: string, folderId: string | null) => {
 export const deleteDocumentsById = async (id: string) => {
   return await Document.findByIdAndDelete(id);
 };
+
+export const getDocumentsPaginatedByFolderId = async (page: number, limit: number, folderId: string) => {
+  const skip = (page - 1) * limit;
+
+  const [docs, total] = await Promise.all([
+    Document.find()
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdDate: -1 })
+      .lean(),
+    Document.countDocuments(),
+  ]);
+
+  const data = await Promise.all(
+    docs.map(async (doc) => {
+      const command = new GetObjectCommand({
+        Bucket: BUCKET,
+        Key: doc?.thumbnailKey ||  doc.s3Key,
+      });
+
+      const url = await getSignedUrl(s3, command, {
+        expiresIn: 3600,
+      });
+
+      return {
+        ...doc,
+        docId: doc.docId,
+        name: doc.name,
+        category: doc.category,
+        imageUrl: url,
+      };
+    })
+  );
+
+  return {
+    data,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+};
