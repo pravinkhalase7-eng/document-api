@@ -37,6 +37,10 @@ const documentSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+     parentFolderId: {
+      type: String,
+      required: false,
+    },
     folderId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Folder",
