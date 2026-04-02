@@ -13,6 +13,7 @@ export const createFolder = async (req: any, res: any) => {
     
 
     const folder = await folderService.createFolder({
+      ...req.body,
       name: req.body.name,
       userId: req.user.userId ,
       parentId: req.body.parentId || null,
