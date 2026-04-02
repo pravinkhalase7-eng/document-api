@@ -14,7 +14,7 @@ const folderSchema = new mongoose.Schema(
     type: { type: String, required: true },
 
     parentId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "Folder",
       default: null, // root folder
     },
