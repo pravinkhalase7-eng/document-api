@@ -30,9 +30,6 @@ export const getFolders = async (req: any, res: any) => {
     req.user.userId,
     req.query.parentId || null
   );
-
-  await Document.find({ userId, parentId });
-
   res.json(folders);
 };
 

@@ -1,5 +1,4 @@
 // services/folder.service.ts
-import { Document } from "../models/document.model";
 import { Folder } from "../models/folder.model";
 
 
@@ -16,9 +15,7 @@ export const createFolder = async (data: any) => {
 };
 
 export const getFolders = async (userId: string, parentId: string | null) => {
-  const folderList =  await Folder.find({ userId, parentId });
-  const documentList =  await Document.find({ userId, parentId });
-  return [...folderList,...documentList];
+  return await Folder.find({ userId, parentId });
 };
 
 export const updateFolder = async (id: string, name: string) => {
