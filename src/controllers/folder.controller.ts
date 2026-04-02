@@ -44,3 +44,8 @@ export const deleteFolder = async (req: any, res: any) => {
   await folderService.deleteFolder(req.params.id);
   res.json({ message: "Folder deleted" });
 };
+
+export const deleteAll = async (req: any, res: any) => {
+  await folderService.deleteAllFolders();
+  res.json({ message: "All Folder deleted" });
+};

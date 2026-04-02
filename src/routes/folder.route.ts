@@ -1,6 +1,7 @@
 import express from "express";
 import {
 createFolder,
+    deleteAll,
 deleteFolder,
 getFolders,
 updateFolder
@@ -13,5 +14,6 @@ router.post("/", authMiddleware, createFolder);
 router.get("/", authMiddleware,  getFolders);
 router.put("/:docId", authMiddleware, updateFolder);
 router.delete("/:docId", authMiddleware, deleteFolder);
+router.delete("/", authMiddleware, deleteAll);
 
 export default router;

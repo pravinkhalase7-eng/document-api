@@ -17,6 +17,11 @@ export const deleteFolder = async (id: string) => {
   return await Folder.findByIdAndDelete(id);
 };
 
+export const deleteAllFolders = async () => {
+  return await Folder.deleteMany();
+};
+
+
 
 export const getFolderByName = async (name: string) => {
   return await Folder.findOne({ name });

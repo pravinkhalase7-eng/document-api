@@ -11,6 +11,8 @@ const folderSchema = new mongoose.Schema(
       required: true,
     },
 
+    type: { type: String, required: true },
+
     parentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Folder",
