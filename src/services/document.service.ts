@@ -101,6 +101,7 @@ export const getDocumentsPaginated = async (page: number, limit: number) => {
 };
 
 export const getDocuments = async (userId: string, folderId: string | null) => {
+  console.log(userId, folderId);
   return await Document.find({ userId, folderId });
 };
 

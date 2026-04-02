@@ -91,6 +91,7 @@ export const creageDoc = async (req: any, res: any) => {
 };
 
 export const getDocs = async (req: any, res: any) => {
+  console.log('calling getdocs');
   const docs = await getDocuments(
     req.user.userId,
     req.query.folderId || null
