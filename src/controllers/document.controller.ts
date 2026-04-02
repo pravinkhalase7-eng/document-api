@@ -92,13 +92,9 @@ export const creageDoc = async (req: any, res: any) => {
 };
 
 export const getDocs = async (req: any, res: any) => {
-  console.log('calling getdocs');
    const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 20;
     const folderId = req.query.folderId ;
-
-    console.log(page, limit, folderId);
-
     const result = await getDocumentsPaginatedByFolderId(page, limit, folderId, req.user.userId);
 
     console.log('result',result);

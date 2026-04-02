@@ -116,6 +116,11 @@ export const deleteDocumentsById = async (id: string) => {
 export const getDocumentsPaginatedByFolderId = async (page: number, limit: number, folderId: string, userId : any) => {
   const skip = (page - 1) * limit;
 
+  console.log('page--->',page);
+  console.log('limit--->',limit);
+  console.log('folderId--->',folderId);
+  console.log('userId--->',userId);
+
   const docsList = folderId ? Document.find({ userId, folderId }): Document.find({ userId });
 
   const [docs, total] = await Promise.all([
