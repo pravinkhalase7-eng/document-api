@@ -13,13 +13,17 @@ const folderSchema = new mongoose.Schema(
 
     type: { type: String, required: true },
 
+    color: { type: String, required: false },
+
+    icon: { type: String, required: false },
+
     parentId: {
       type: String,
       ref: "Folder",
       default: null, // root folder
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Folder = mongoose.model("Folder", folderSchema);

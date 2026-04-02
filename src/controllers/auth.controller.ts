@@ -3,6 +3,7 @@ import { createUser, getUserByEmail } from "../services/auth.service";
 import { hashPassword, comparePassword } from "../utils/hash";
 import { generateToken, verifyToken } from "../utils/jwt";
 import { getUserById } from "../services/user.service";
+import { createDefaultFolders, createFolder } from "../services/folder.service";
 
 export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -16,9 +17,11 @@ export const register = async (req: Request, res: Response) => {
   const hashed = await hashPassword(password);
   const user = await createUser(email, hashed);
 
+  const folders = await createDefaultFolders(user?.userId);
+
   const token = generateToken({ userId: user.userId });
 
-  res.json({ user, token });
+  res.json({ user, token, folders });
 };
 
 export const login = async (req: Request, res: Response) => {
