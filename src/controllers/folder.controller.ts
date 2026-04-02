@@ -4,6 +4,14 @@ import { getUserByIdService } from "../services/user.service";
 
 export const createFolder = async (req: any, res: any) => {
   try {
+
+
+      const existing = await folderService.getFolderByName(req.body.name);
+      if (existing) {
+        return res.status(400).json({ message: "Folder already exists" });
+      }
+    
+
     const folder = await folderService.createFolder({
       name: req.body.name,
       userId: req.user.userId ,

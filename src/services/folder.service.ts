@@ -16,3 +16,8 @@ export const updateFolder = async (id: string, name: string) => {
 export const deleteFolder = async (id: string) => {
   return await Folder.findByIdAndDelete(id);
 };
+
+
+export const getFolderByName = async (name: string) => {
+  return await Folder.find({ name });
+};
