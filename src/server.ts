@@ -6,6 +6,8 @@ import authRoutes from "./routes/auth.routes";
 import fileRoutes from "./routes/file.route";
 import documentRoutes from "./routes/document.route";
 import folderRoutes from "./routes/folder.route";
+import otpRoutes from "./routes/otp.routes";
+
 import { serverAdapter } from "./utils/bullBoard";
 
 
@@ -32,6 +34,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/documents", documentRoutes);
+app.use("/api/otp", otpRoutes);
+
 app.use("/api/folders", folderRoutes);
 app.use("/admin/queues", serverAdapter.getRouter());
 // Health check
