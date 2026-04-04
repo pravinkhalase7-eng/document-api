@@ -4,6 +4,7 @@ import { hashPassword, comparePassword } from "../utils/hash";
 import { generateToken, verifyToken } from "../utils/jwt";
 import { getUserById } from "../services/user.service";
 import { createDefaultFolders, createFolder } from "../services/folder.service";
+import axios from "axios";
 
 export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -72,3 +73,49 @@ export const getUserInfo = async (req: Request, res: Response) => {
     res.status(401).json({ message: "Invalid or expired token" });
   }
 };
+
+export const callback = async (req: Request, res: Response) => {
+
+   try {
+    const { code } = req.query;
+
+    if (!code) {
+      return res.status(400).send('No code provided');
+    }
+
+    // 1. Exchange code for tokens
+    const tokenRes = await axios.post(
+      'https://oauth2.googleapis.com/token',
+      {
+        code,
+        client_id: process.env.GOOGLE_CLIENT_ID,
+        client_secret: process.env.GOOGLE_CLIENT_SECRET,
+        redirect_uri: 'https://yourdomain.com/auth/callback',
+        grant_type: 'authorization_code',
+      }
+    );
+
+    const { access_token, id_token } = tokenRes.data;
+
+    // 2. Get user info
+    const userRes = await axios.get(
+      'https://www.googleapis.com/oauth2/v2/userinfo',
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+
+    const user = userRes.data;
+
+    // 3. (Optional) Create user in DB
+
+    // 4. Redirect back to app (deep link)
+    res.redirect(`stickersmash://login?token=${id_token}`);
+
+  } catch (err: any) {
+    console.error(err.response?.data || err.message);
+    res.status(500).send('OAuth error');
+  }
+}
