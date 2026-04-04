@@ -109,8 +109,8 @@ export const getDocuments = async (userId: string, folderId: string | null) => {
   }
 };
 
-export const deleteDocumentsById = async (id: string) => {
-  return await Document.findByIdAndDelete(id);
+export const deleteDocumentsById = async (docId: string) => {
+  return await Document.findByIdAndDelete({docId: docId});
 };
 
 export const getDocumentsPaginatedByFolderId = async (page: number, limit: number, folderId: string, userId : any) => {
@@ -119,7 +119,7 @@ export const getDocumentsPaginatedByFolderId = async (page: number, limit: numbe
   console.log('page--->',page);
   console.log('limit--->',limit);
   console.log('folderId--->',folderId);
-  console.log('userId--->',userId);
+  console.log('userId--->',page);
 
   const docsList = folderId ? Document.find({ userId, folderId }): Document.find({ userId });
 
