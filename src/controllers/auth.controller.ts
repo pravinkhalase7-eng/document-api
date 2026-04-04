@@ -79,6 +79,7 @@ export const callback = async (req: Request, res: Response) => {
    try {
     const { code } = req.query;
 
+    console.log('callback started..', code)
     if (!code) {
       return res.status(400).send('No code provided');
     }
@@ -90,10 +91,12 @@ export const callback = async (req: Request, res: Response) => {
         code,
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
-        redirect_uri: 'https://yourdomain.com/auth/callback',
+        redirect_uri: 'https://doxstation.com/api/auth/callback',
         grant_type: 'authorization_code',
       }
     );
+
+        console.log('callback tokenRes started..', tokenRes)
 
     const { access_token, id_token } = tokenRes.data;
 
@@ -108,6 +111,8 @@ export const callback = async (req: Request, res: Response) => {
     );
 
     const user = userRes.data;
+
+    console.log('user..', user);
 
     // 3. (Optional) Create user in DB
 
