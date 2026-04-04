@@ -103,6 +103,12 @@ export const getDocs = async (req: any, res: any) => {
 };
 
 export const deleteDoc = async (req: any, res: any) => {
-  await deleteDocumentsById(req.params.id);
+
+ const doc = await getDocumentById(req.params.docId);
+
+  if (!doc) {
+    return res.status(404).json({ message: "Not found" });
+  }
+  await deleteDocumentsById(req.params.docId);
   res.json({ message: "Deleted" });
 };
