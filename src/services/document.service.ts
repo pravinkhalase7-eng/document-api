@@ -110,7 +110,7 @@ export const getDocuments = async (userId: string, folderId: string | null) => {
 };
 
 export const deleteDocumentsById = async (docId: string) => {
-  return await Document.findOneAndDelete({docId: docId});
+  return await Document.deleteOne({docId: docId});
 };
 
 export const getDocumentsPaginatedByFolderId = async (page: number, limit: number, folderId: string, userId : any) => {
