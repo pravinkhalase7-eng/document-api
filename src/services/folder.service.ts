@@ -38,7 +38,7 @@ export const createDefaultFolders = async (userId: string) => {
       ...folder,
       userId,
       type: "folder",
-      parentId: null, // root level
+      parentId: "root", // root level
     }));
 
     const folders = await Folder.insertMany(foldersToInsert);
