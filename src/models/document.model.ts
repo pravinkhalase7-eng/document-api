@@ -11,7 +11,7 @@ const documentSchema = new mongoose.Schema(
       type: String,
       ref: "User",
       required: true,
-    },
+    },  
     name: {
       type: String,
       required: true,
@@ -47,7 +47,7 @@ const documentSchema = new mongoose.Schema(
       required: false,
     },
     folderId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "Folder",
       default: null,
     },  
