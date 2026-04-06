@@ -8,6 +8,7 @@ import {
   createDocument,
   getDocuments,
   getDocumentsPaginatedByFolderId,
+  deleteAllDocumentByFolderId,
 } from "../services/document.service";
 
 // Create
@@ -62,6 +63,11 @@ export const updateDoc = async (req: Request, res: Response) => {
 // Delete
 export const deleteAllDoc = async (req: Request, res: Response) => {
   const doc = await deleteAllDocument();
+  res.json({ message: "Deleted successfully" });
+};
+
+export const deleteAllDocByFolder = async (req: Request, res: Response) => {
+  const doc = await deleteAllDocumentByFolderId(req.params.folderId);
   res.json({ message: "Deleted successfully" });
 };
 
