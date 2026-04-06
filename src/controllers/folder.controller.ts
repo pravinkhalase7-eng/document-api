@@ -33,6 +33,15 @@ export const getFolders = async (req: any, res: any) => {
   res.json(folders);
 };
 
+export const getFoldersByParent = async (req: any, res: any) => {
+    console.log('getting folder for user', req.user.userId);
+  const folders = await folderService.getFoldersByParentId(
+    req.user.userId
+  );
+  res.json(folders);
+};
+
+
 export const updateFolder = async (req: any, res: any) => {
   const folder = await folderService.updateFolder(
     req.params.id,

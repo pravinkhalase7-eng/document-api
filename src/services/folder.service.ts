@@ -18,6 +18,10 @@ export const getFolders = async (userId: string) => {
   return await Folder.find({ userId });
 };
 
+export const getFoldersByParentId = async (parentId: string) => {
+  return await Folder.find({ parentId });
+};
+
 export const updateFolder = async (id: string, name: string) => {
   return await Folder.findByIdAndUpdate(id, { name }, { new: true });
 };
