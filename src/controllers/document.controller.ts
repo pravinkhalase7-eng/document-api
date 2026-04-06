@@ -9,6 +9,7 @@ import {
   getDocuments,
   getDocumentsPaginatedByFolderId,
   deleteAllDocumentByFolderId,
+  getDocumentsPaginatedByUserId,
 } from "../services/document.service";
 
 // Create
@@ -85,6 +86,21 @@ export const getDocumentsWithUrl = async (_req: Request, res: Response) => {
     res.status(500).json({ message: "Failed to fetch documents" });
   }
 };
+
+export const getDocumentsWithUrlByusers = async (_req: any, res: Response) => {
+  try {
+    const page = parseInt(_req.query.page as string) || 1;
+    const limit = parseInt(_req.query.limit as string) || 20;
+
+    const result = await getDocumentsPaginatedByUserId(page, limit, _req?.user?.userId);
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch documents" });
+  }
+};
+
 
 // controllers/document.controller.ts
 

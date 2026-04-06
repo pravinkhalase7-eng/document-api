@@ -8,12 +8,14 @@ import {
   deleteAllDoc,
   creageDoc,
   deleteAllDocByFolder,
+  getDocumentsWithUrlByusers,
 } from "../controllers/document.controller";
 import { authMiddleware } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
 router.get("/list", authMiddleware, getDocumentsWithUrl);
+router.get("/users/list", authMiddleware, getDocumentsWithUrlByusers);
 router.delete("/all", authMiddleware, deleteAllDoc);
 router.delete("/:folderId", authMiddleware, deleteAllDocByFolder);
 router.post("/", authMiddleware, creageDoc);

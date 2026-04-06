@@ -104,6 +104,52 @@ export const getDocumentsPaginated = async (page: number, limit: number) => {
   };
 };
 
+
+
+export const getDocumentsPaginatedByUserId = async (page: number, limit: number, userId: string) => {
+  const skip = (page - 1) * limit;
+
+  const [docs, total] = await Promise.all([
+    Document.find({userId})
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdDate: -1 })
+      .lean(),
+    Document.countDocuments(),
+  ]);
+
+  const data = await Promise.all(
+    docs.map(async (doc) => {
+      const command = new GetObjectCommand({
+        Bucket: BUCKET,
+        Key: doc?.thumbnailKey ||  doc.s3Key,
+      });
+
+      const url = await getSignedUrl(s3, command, {
+        expiresIn: 3600,
+      });
+
+      return {
+        ...doc,
+        docId: doc.docId,
+        name: doc.name,
+        category: doc.category,
+        imageUrl: url,
+      };
+    })
+  );
+
+  return {
+    data,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+};
+
 export const getDocuments = async (userId: string, folderId: string | null) => {
   console.log(userId, folderId);
   if(folderId){
