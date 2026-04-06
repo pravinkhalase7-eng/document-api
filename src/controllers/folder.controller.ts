@@ -34,9 +34,8 @@ export const getFolders = async (req: any, res: any) => {
 };
 
 export const getFoldersByParent = async (req: any, res: any) => {
-    console.log('getting folder for user', req.user.userId);
   const folders = await folderService.getFoldersByParentId(
-    req.user.userId
+    req.params.parentId
   );
   res.json(folders);
 };
