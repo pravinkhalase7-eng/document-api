@@ -14,8 +14,8 @@ export const createFolder = async (data: any) => {
   return await Folder.create(data);
 };
 
-export const getFolders = async (userId: string, parentId: string | null) => {
-  return await Folder.find({ userId, parentId });
+export const getFolders = async (userId: string) => {
+  return await Folder.find({ userId });
 };
 
 export const updateFolder = async (id: string, name: string) => {
