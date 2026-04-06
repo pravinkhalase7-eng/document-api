@@ -18,6 +18,11 @@ export const deleteUserService = async (id: string) => {
   return await User.findByIdAndDelete(id);
 };
 
+export const deleteAll = async (id: string) => {
+  return await User.deleteMany();
+};
+
+
 
 // Get user by ID
 export const getUserById = async (userId: string) => {

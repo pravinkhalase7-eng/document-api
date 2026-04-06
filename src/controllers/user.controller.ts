@@ -4,6 +4,7 @@ import {
   getUsersService,
   getUserByIdService,
   deleteUserService,
+  deleteAll,
 } from "../services/user.service";
 
 export const createUser = async (req: Request, res: Response) => {
@@ -37,6 +38,15 @@ export const deleteUser = async (req: Request, res: Response) => {
   try {
     await deleteUserService(req.params.id);
     res.json({ message: "User deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting user", error });
+  }
+};
+
+export const deleteAllUsers = async (req: Request, res: Response) => {
+  try {
+    await deleteAll(req.params.id);
+    res.json({ message: "All User deleted" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting user", error });
   }
