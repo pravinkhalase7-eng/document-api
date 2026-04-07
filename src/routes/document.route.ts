@@ -22,6 +22,6 @@ router.post("/", authMiddleware, creageDoc);
 router.get("/", authMiddleware,  getDocs);
 router.get("/:docId", authMiddleware, getDoc);
 router.put("/:docId", authMiddleware, updateDoc);
-router.delete("/:docId", authMiddleware, deleteDoc);
+router.delete("/:id", authMiddleware, deleteDoc);
 
 export default router;

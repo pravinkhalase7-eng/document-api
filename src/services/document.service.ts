@@ -31,8 +31,8 @@ export const getAllDocuments = async () => {
 };
 
 // Get by ID
-export const getDocumentById = async (docId: string) => {
-  return await Document.findOne({ docId }).lean();
+export const getDocumentById = async (id: string) => {
+  return await Document.findById(id);
 };
 
 // Update
@@ -165,8 +165,8 @@ export const getDocuments = async (userId: string, folderId: string | null) => {
   }
 };
 
-export const deleteDocumentsById = async (docId: string) => {
-  return await Document.deleteOne({docId: docId});
+export const deleteDocumentsById = async (id: string) => {
+  return await Document.findByIdAndDelete(id);
 };
 
 export const getDocumentsPaginatedByFolderId = async (page: number, limit: number, folderId: string, userId : any) => {
