@@ -109,6 +109,12 @@ export const getDocumentsPaginated = async (page: number, limit: number) => {
 export const getDocumentsPaginatedByUserId = async (page: number, limit: number, userId: string) => {
   const skip = (page - 1) * limit;
 
+
+  console.log('page--->',page);
+  console.log('limit--->',limit);
+  console.log('getDocumentsPaginatedByUserId--->',getDocumentsPaginatedByUserId);
+  console.log('userId--->',page);
+
   const [docs, total] = await Promise.all([
     Document.find({userId})
       .skip(skip)
