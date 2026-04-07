@@ -15,7 +15,7 @@ router.post("/", authMiddleware, createFolder);
 router.get("/", authMiddleware,  getFolders);
 router.get("/:parentId", authMiddleware,  getFoldersByParent);
 router.put("/:docId", authMiddleware, updateFolder);
-router.delete("/:docId", authMiddleware, deleteFolder);
+router.delete("/:id", authMiddleware, deleteFolder);
 router.delete("/", authMiddleware, deleteAll);
 
 export default router;

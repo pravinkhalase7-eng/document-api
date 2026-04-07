@@ -1,5 +1,6 @@
 // services/folder.service.ts
 import { Folder } from "../models/folder.model";
+import { deleteAllDocumentByFolderId } from "./document.service";
 
 
   const DEFAULT_FOLDERS = [
@@ -27,6 +28,10 @@ export const updateFolder = async (id: string, name: string) => {
 };
 
 export const deleteFolder = async (id: string) => {
+
+  const doc = await deleteAllDocumentByFolderId(id);
+  console.log('all documents delete..')
+
   return await Folder.findByIdAndDelete(id);
 };
 

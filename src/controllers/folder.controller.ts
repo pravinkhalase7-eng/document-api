@@ -51,7 +51,7 @@ export const updateFolder = async (req: any, res: any) => {
 };
 
 export const deleteFolder = async (req: any, res: any) => {
-  await folderService.deleteFolder(req.params.docId);
+  await folderService.deleteFolder(req.params.id);
   res.json({ message: "Folder deleted" });
 };
 
