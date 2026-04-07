@@ -30,7 +30,7 @@ export const updateFolder = async (id: string, name: string) => {
 export const deleteFolder = async (id: string) => {
 
   const doc = await deleteAllDocumentByFolderId(id);
-  console.log('all documents delete..')
+  console.log('all documents delete.. byid', id)
 
   return await Folder.findByIdAndDelete(id);
 };
