@@ -17,7 +17,7 @@ const router = express.Router();
 router.get("/list", authMiddleware, getDocumentsWithUrl);
 router.get("/users/list", authMiddleware, getDocumentsWithUrlByusers);
 router.delete("/all", authMiddleware, deleteAllDoc);
-router.delete("/:folderId", authMiddleware, deleteAllDocByFolder);
+router.delete("/folder/:folderId", authMiddleware, deleteAllDocByFolder);
 router.post("/", authMiddleware, creageDoc);
 router.get("/", authMiddleware,  getDocs);
 router.get("/:docId", authMiddleware, getDoc);
