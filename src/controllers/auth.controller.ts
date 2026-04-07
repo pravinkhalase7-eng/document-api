@@ -25,6 +25,29 @@ export const register = async (req: Request, res: Response) => {
   res.json({ user, token, folders });
 };
 
+
+export const loginUser = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const existing = await getUserByEmail(email);
+  if (existing) {
+     const token = generateToken({ userId: existing.userId });
+       res.json({ existing, token });
+
+  }else{
+    
+  const hashed = await hashPassword(password);
+  const user = await createUser(email, hashed);
+
+  const folders = await createDefaultFolders(user?.userId);
+
+  const token = generateToken({ userId: user.userId });
+
+  res.json({ user, token, folders });
+  }
+
+};
+
 export const login = async (req: Request, res: Response) => {
   const { email, password, authToken } = req.body;
 
