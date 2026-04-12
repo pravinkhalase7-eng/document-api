@@ -121,8 +121,11 @@ export const callback = async (req: Request, res: Response) => {
     }
     const state = req.query.state as string;
 
+    console.log('state is', state);
+
     const job = await pkceQueue.getJob(state);
 
+    console.log('job is ', job)
     if (!job) {
       return res.status(400).send("Invalid or expired state");
     }
