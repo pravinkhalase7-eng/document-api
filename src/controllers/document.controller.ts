@@ -91,8 +91,9 @@ export const getDocumentsWithUrlByusers = async (_req: any, res: Response) => {
   try {
     const page = parseInt(_req.query.page as string) || 1;
     const limit = parseInt(_req.query.limit as string) || 20;
+    const userId = _req.query.userId;
 
-    const result = await getDocumentsPaginatedByUserId(page, limit, _req?.user?.userId);
+    const result = await getDocumentsPaginatedByUserId(page, limit, userId || _req?.user?.userId);
 
     res.json(result);
   } catch (err) {
