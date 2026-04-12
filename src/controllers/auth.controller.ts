@@ -176,7 +176,7 @@ export const callback = async (req: Request, res: Response) => {
     // 3. (Optional) Create user in DB
 
     // 4. Redirect back to app (deep link)
-    res.redirect(`stickersmash://login?token=${id_token}`);
+    res.redirect(`stickersmash://home?token=${id_token}`);
   } catch (err: any) {
     console.error(err.response?.data || err.message);
     res.status(500).send("OAuth error");
