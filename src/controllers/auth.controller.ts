@@ -6,6 +6,7 @@ import { getUserById } from "../services/user.service";
 import { createDefaultFolders, createFolder } from "../services/folder.service";
 import axios from "axios";
 import qs from "qs";
+import { Queue } from "bullmq";
 
 export const register = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -93,6 +94,23 @@ export const getUserInfo = async (req: Request, res: Response) => {
   }
 };
 
+const pkceQueue = new Queue("pkce");
+
+export const storePKCE = async (req: Request, res: Response) => {
+  const { state, codeVerifier } = req.body;
+
+  await pkceQueue.add(
+    "store-verifier",
+    { codeVerifier },
+    {
+      jobId: state, // 🔥 IMPORTANT
+      delay: 5 * 60 * 1000, // auto-expire after 5 min
+      removeOnComplete: true,
+    },
+  );
+
+  res.send({ success: true });
+};
 export const callback = async (req: Request, res: Response) => {
   try {
     const { code } = req.query;
@@ -101,7 +119,15 @@ export const callback = async (req: Request, res: Response) => {
     if (!code) {
       return res.status(400).send("No code provided");
     }
+    const state = req.query.state as string;
 
+    const job = await pkceQueue.getJob(state);
+
+    if (!job) {
+      return res.status(400).send("Invalid or expired state");
+    }
+
+    const { codeVerifier } = job.data;
     // 1. Exchange code for tokens
     const tokenRes = await axios.post(
       "https://oauth2.googleapis.com/token",
@@ -111,6 +137,7 @@ export const callback = async (req: Request, res: Response) => {
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
         redirect_uri: "https://doxstation.com/api/auth/callback",
         grant_type: "authorization_code",
+        code_verifier: codeVerifier, // 🔥 from BullMQ
         // code_verifier if using PKCE
       }),
       {

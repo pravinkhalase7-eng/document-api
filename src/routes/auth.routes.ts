@@ -7,6 +7,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/me", getUserInfo);
 router.get("/callback", callback);
+router.get("/store-pkce", callback);
 router.post("/user/login", loginUser);
 
 export default router;
