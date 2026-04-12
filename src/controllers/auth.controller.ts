@@ -94,7 +94,12 @@ export const getUserInfo = async (req: Request, res: Response) => {
   }
 };
 
-const pkceQueue = new Queue("pkce");
+const pkceQueue = new Queue("pkce", {
+  connection: {
+    host: process.env.REDIS_HOST || "127.0.0.1",
+    port: Number(process.env.REDIS_PORT) || 6379,
+  },
+});
 
 export const storePKCE = async (req: Request, res: Response) => {
   const { state, codeVerifier } = req.body;
